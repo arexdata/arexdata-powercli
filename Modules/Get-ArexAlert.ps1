@@ -21,5 +21,5 @@ function Get-ArexAlert {
 
 	$prop = @('date','server', 'source', 'operationName', 'userDomain', 'user','filepath','filename')
 
-	FormatArexResult $obj $prop |ft
+	FormatArexResult $obj $prop 
 }

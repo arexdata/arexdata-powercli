@@ -13,12 +13,6 @@
    Arexdata Username and Password in either PSCredential or domain\username format
 .EXAMPLE
    Connect-ArexServer -Server api.dev.arexdata.com -User root -Password 12345
-.EXAMPLE
-   Connect-UebServer -Server 192.168.1.100 -Credential 'domain\user'
-.EXAMPLE
-   Connect-UebServer -Server 192.168.1.100 -Credential $cred
-.EXAMPLE
-   Connect-UebServer -Server 192.168.1.100 -Credential (Get-Credential)
 #>
 function Connect-ArexServer {
 	[CmdletBinding(

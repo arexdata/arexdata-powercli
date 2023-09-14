@@ -30,26 +30,25 @@ Download and getting started
 
 Open Administrator Powershell Console:
 
-    PS> Set-ExecutionPolicy Bypass
-    PS> iwr https://raw.githubusercontent.com/arexdata/arexdata-powercli/master/Install.ps1 | iex
+    iwr https://raw.githubusercontent.com/arexdata/arexdata-powercli/master/Install.ps1 | iex
 
 **Usage:**
 
-    PS> Import-Module Arexdata
-    PS> Connect-ArexServer -Server api.eu.arexdata.com -User user@domain.com -Password yourpass
+    Import-Module Arexdata
+    Connect-ArexServer -Server api.eu.arexdata.com -User user@domain.com -Password yourpass
 
 **Update:**
 
 Once installed you can update to last version opening Administrator Powershell Console and run:
 
-    PS> Import-Module Arexdata
-    PS> Update-Arexdata
+    Import-Module Arexdata
+    Update-Arexdata
 
 **Help:**
 
 You can list all available cmdlets using:
 
-    PS> Get-Arexhelp
+    Get-Arexhelp
 
 **Blogs articles about Arexdata PowerCLI:**
 

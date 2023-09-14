@@ -3,8 +3,8 @@
 
 Write-Host "Downloading latest version ..." -ForegroundColor Cyan
 $webclient = New-Object System.Net.WebClient
-$url = "http://github.com/arexdata/arexdata-powercli/archive/master.zip"
-$file = "$($env:TEMP)\Arexdata-Powercli.zip"
+$url = "http://github.com/arexdata/arexdata-powercli/archive/main.zip"
+$file = "$($env:TEMP)\Arexdata-Powercli-main.zip"
 $webclient.DownloadFile($url,$file)
 
 
@@ -21,7 +21,7 @@ $destination.Copyhere($zip_file.items(), 0x10)
 ##Install
 
 Write-Host "Installing latest version ..." -ForegroundColor Cyan
-$item = $targetondisk + "\arexdata-powercli\*"
+$item = $targetondisk + "\arexdata-powercli-main\*"
 $destination = "C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata-powercli\"
 New-Item -ItemType Directory -Force -Path $destination
 cpi $item -Destination $destination -Recurse -Force

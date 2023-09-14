@@ -26,7 +26,7 @@ $destination = "C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata\"
 if(Test-path $destination) {
     Remove-Item -Path $destination -Recurse -Force 
 }
-New-Item -ItemType Directory -Force -Path $destination
+New-Item -ItemType Directory -Force -Path $destination | Out-Null
 cpi $item -Destination $destination -Recurse -Force
 
 

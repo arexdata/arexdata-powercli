@@ -4,9 +4,9 @@
 .DESCRIPTION
    This cmdlet returns the alerts from the connected Arexdata Server. Use "Connect-ArexServer" to connect.
 .EXAMPLE
-   Get-ArexAlert -RecordId xxxx-xxx-xxxx
+   Get-ArexAlertDetail -RecordId xxxx-xxx-xxxx
 #>
-function Get-ArexAlert {
+function Get-ArexAlertDetail {
 	[CmdletBinding()]
 	param(
         [Parameter(Mandatory=$true,Position=0)]

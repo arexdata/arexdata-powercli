@@ -22,7 +22,7 @@ $destination.Copyhere($zip_file.items(), 0x10)
 
 Write-Host "Installing latest version ..." -ForegroundColor Cyan
 $item = $targetondisk + "\arexdata-powercli-main\*"
-$destination = "C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata-powercli\"
+$destination = "C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata\"
 New-Item -ItemType Directory -Force -Path $destination
 cpi $item -Destination $destination -Recurse -Force
 
@@ -30,25 +30,23 @@ cpi $item -Destination $destination -Recurse -Force
 ##Validate
 
 Write-Host "Validating install ..." -ForegroundColor Cyan
-$testfile = 'C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata-powercli\Arexdata.psm1'
+$testfile = 'C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata\Arexdata.psm1'
 $TestPath = Test-Path $testfile
 
-If ($TestPath -eq $True)
-    
-    {
+If ($TestPath -eq $True) 
+{
     Write-Host "Importing Arexdata PowerCLI Module..." -ForegroundColor Cyan
     Import-Module Arexdata -Force
     Write-Host "Installation Complete and module loaded!" -ForegroundColor Green
     
     ##Cleanup
     
-    $path = $targetondisk + "\arexdata-powercli"
+    $path = $targetondisk + "\arexdata-powercli-main"
     Remove-Item -Recurse $path -Force
     Remove-Item $file -Force
     
     ##END.
-    }
-
+}
 Else 
 {
     Write-Host "Installation Failed. Please check and try again." -ForegroundColor Red

@@ -4,7 +4,7 @@ Chat Room
 
 Want to chat with other members of the Arexdata community?
 
-[![Join the chat at https://app.gitter.im/#/room/#arexdata-powercli:gitter.im](https://badges.gitter.im/arexdata/arexdata-powercli.svg)]https://app.gitter.im/#/room/#arexdata-powercli:gitter.im)
+[(https://badges.gitter.im/arexdata/arexdata-powercli.svg)](https://app.gitter.im/#/room/#arexdata-powercli:gitter.im)
 
 Engage, Contribute and Provide Feedback
 ---------------------------------------

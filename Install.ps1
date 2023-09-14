@@ -23,7 +23,9 @@ $destination.Copyhere($zip_file.items(), 0x10)
 Write-Host "Installing latest version ..." -ForegroundColor Cyan
 $item = $targetondisk + "\arexdata-powercli-main\*"
 $destination = "C:\Windows\System32\WindowsPowerShell\v1.0\Modules\arexdata\"
-Remove-Item -Path $destination -Recurse -Force -ErrorAction SilentlyContinue
+if(Testpath $destination) {
+    Remove-Item -Path $destination -Recurse -Force 
+}
 New-Item -ItemType Directory -Force -Path $destination
 cpi $item -Destination $destination -Recurse -Force
 

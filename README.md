@@ -30,7 +30,7 @@ Download and getting started
 
 Open Administrator Powershell Console:
 
-    iwr https://raw.githubusercontent.com/arexdata/arexdata-powercli/main/Install.ps1 | iex
+    iwr https://raw.githubusercontent.com/arexdata/arexdata-powercli/main/Install.ps1 -UseBasicParsing | iex
 
 **Usage:**
 

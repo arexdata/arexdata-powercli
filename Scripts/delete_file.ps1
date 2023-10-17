@@ -15,7 +15,7 @@ write-host "---------------------------------------"
 write-host "Arexdata alert powershell script sample"
 write-host "---------------------------------------"
 
-Import-Module arexdata
+Import-Module arexdata -SkipEditionCheck  
 Connect-ArexServer -Server api.dev.eu.arexdata.com -User admin@lab.local -Password password
 $alert = Get-ArexAlertDetail -RecordId bb4aef1e-3418-4142-afcc-b777d0af5be4
 $alert|Select-Object -Property user, operationname

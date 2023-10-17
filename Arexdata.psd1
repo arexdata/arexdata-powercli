@@ -26,6 +26,9 @@
     # Copyright statement for this module
     Copyright = '(c) 20123 . All rights reserved.'
     
+    # Supported PSEditions
+    CompatiblePSEditions =@('Desktop','Core')
+
     # Description of the functionality provided by this module
     # Description = ''
     

@@ -5,6 +5,13 @@ function CheckConnection {
 	}
 }
 
+function ArexGet {
+	param ([string] $api)
+	$ProgressPreference = 'SilentlyContinue'
+	Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Get -Headers $global:ArexAuthHeader -ContentType 'application/json'
+}
+
+
 function ArexPost {
 	param ([string] $api, $body)
 	$ProgressPreference = 'SilentlyContinue'

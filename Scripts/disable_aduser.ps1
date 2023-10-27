@@ -26,9 +26,6 @@ write-host "---------------------------------------"
 
 write-host "params: | $source | $alertname | $severity | $alertype | $alertid | $alertrecordid | $initat | $endat |"
 
-Write-Host "Connecting AD..."
-Import-Module -Name ActiveDirectory
-
 $password = ConvertTo-SecureString $DCPASS -AsPlainText -Force
 $psCred = New-Object System.Management.Automation.PSCredential -ArgumentList ($DCUSER, $password)
 

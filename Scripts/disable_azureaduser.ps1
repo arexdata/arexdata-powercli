@@ -10,15 +10,13 @@ param (
 )
 
 #-- CONST ----
-$AREXUSER = "admin@company.local"
+$AREXUSER = "user"
 $AREXPASS = "password"
-$DCHOST = "dc01"
-$DCUSER = "lab\admin"
-$DCPASS = "password"
+$ADUSER = "365user"
+$ADPASS = "password"
 #-------------
 
 Start-Transcript -path $($PSCommandPath + ".txt") -append
-Set-ExecutionPolicy Unrestricted
 
 write-host "---------------------------------------"
 write-host "Arexdata alert powershell script sample"
@@ -26,8 +24,8 @@ write-host "---------------------------------------"
 
 write-host "params: | $source | $alertname | $severity | $alertype | $alertid | $alertrecordid | $initat | $endat |"
 
-$password = ConvertTo-SecureString $DCPASS -AsPlainText -Force
-$psCred = New-Object System.Management.Automation.PSCredential -ArgumentList ($DCUSER, $password)
+$password = ConvertTo-SecureString $ADPASS -AsPlainText -Force
+$psCred = New-Object System.Management.Automation.PSCredential -ArgumentList ($ADUSER, $password)
 
 Write-host "Connecting Arexdata..."
 Import-Module arexdata   | Out-Null
@@ -36,16 +34,13 @@ $alert = Get-ArexAlertDetail -RecordId $alertrecordid
 
 $users = $alert | Group-Object -Property user
 
+Write-Host "Connecting AzureAD..."
+Connect-AzureAD -Credential $psCred
+
 foreach($u in $users){
 	Write-Host "Disabling user: " $u.Name
-	Invoke-Command -ComputerName $DCHOST -Credential $psCred -ArgumentList $u.Name -ScriptBlock { 
-		param ($user) 
-		Get-ADUser -Identity $user 
-		Disable-ADAccount -Identity $user
-        Get-ADUser -Identity $user 
-	}
+    Set-AzureADUser -ObjectID $u.Name -AccountEnabled $false
 }
-
 
 Stop-Transcript
 

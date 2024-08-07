@@ -10,6 +10,7 @@ param (
 )
 
 #-- CONST ----
+$AREXSERVER= "api.eu.arexdata.com"
 $AREXUSER = "user"
 $AREXPASS = "password"
 $ADUSER = "365user"
@@ -29,7 +30,7 @@ $psCred = New-Object System.Management.Automation.PSCredential -ArgumentList ($A
 
 Write-host "Connecting Arexdata..."
 Import-Module arexdata   | Out-Null
-Connect-ArexServer -Server api.dev.eu.arexdata.com -User $AREXUSER -Password $AREXPASS  | Out-Null
+Connect-ArexServer -Server $AREXSERVER -User $AREXUSER -Password $AREXPASS  | Out-Null
 $alert = Get-ArexAlertDetail -RecordId $alertrecordid
 
 $users = $alert | Group-Object -Property user

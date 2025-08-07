@@ -22,6 +22,16 @@ function ArexPost {
 	}
 }
 
+function ArexPut {
+	param ([string] $api, $body)
+	$ProgressPreference = 'SilentlyContinue'
+	if($null -ne $body){
+		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Put -Headers $global:ArexAuthHeader -Body (ConvertTo-Json -InputObject $body -Depth 10 -Compress)  -ContentType 'application/json'
+	} else {
+		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Put -Headers $global:ArexAuthHeader -ContentType 'application/json'
+	}
+}
+
 function FormatArexResult{
 	param(
 		[object[]] $obj,  

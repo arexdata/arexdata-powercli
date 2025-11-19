@@ -32,11 +32,11 @@ function Get-ArexTasks {
 
         
     $response = ArexPost "AgentTask/0/1000" $filters
-	$obj = $response.listdata
-    $obj.{$values}
-    return
+	$obj = $response.listdata.{$values}
+   
     $prop = @(
         'agentName',
+        'proxyConfigurationName'
         'startAt',
         'lastUpdateAt',
         'status',

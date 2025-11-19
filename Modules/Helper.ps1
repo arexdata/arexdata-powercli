@@ -33,17 +33,41 @@ function ArexPut {
 	}
 }
 
-function FormatArexResult{
-	param(
-		[object[]] $obj,  
-		[object[]] $prop )
+function FormatArexResult {
+    param(
+        [object[]] $obj,  
+        [object[]] $prop 
+    )
 
-	if($obj) {
-		$obj|%{
-			$_.psTypeNames.Insert(0, "ArexObject")
-		}
-	
-		Update-TypeData -Force -TypeName "ArexObject" -DefaultDisplayPropertySet $prop
-		$obj
-	}
+    if ($obj) {
+        # Lista para almacenar los objetos modificados
+        $filteredObjects = @()
+
+        # Loop a través de cada objeto
+        $obj | ForEach-Object {
+            $objItem = $_
+            
+            # Crear un nuevo objeto vacío para almacenar solo las propiedades deseadas
+            $newObj = New-Object PSObject
+
+            # Agregar solo las propiedades que están en la lista de propiedades ($prop)
+            foreach ($p in $prop) {
+                if ($objItem.PSObject.Properties[$p]) {
+                    # Agregar la propiedad al nuevo objeto
+                    $newObj | Add-Member -MemberType NoteProperty -Name $p -Value $objItem.$p
+                }
+            }
+
+            # Agregar el objeto filtrado a la lista
+            $filteredObjects += $newObj
+        }
+
+        # Devolver los objetos filtrados
+        return $filteredObjects
+    }
 }
+
+
+
+
+

@@ -15,6 +15,7 @@ function ArexGet {
 function ArexPost {
 	param ([string] $api, $body)
 	$ProgressPreference = 'SilentlyContinue'
+
 	if($null -ne $body){
 		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Post -Headers $global:ArexAuthHeader -Body (ConvertTo-Json -InputObject $body -Depth 10 -Compress)  -ContentType 'application/json'
 	} else {

@@ -13,13 +13,19 @@ function ArexGet {
 
 
 function ArexPost {
-	param ([string] $api, $body)
+	param ([string] $api, $body, [hashtable] $extraHeaders)
 	$ProgressPreference = 'SilentlyContinue'
 
+	$headers = $global:ArexAuthHeader
+	if($extraHeaders){
+		$headers = $global:ArexAuthHeader.Clone()
+		foreach($key in $extraHeaders.Keys){ $headers[$key] = $extraHeaders[$key] }
+	}
+
 	if($null -ne $body){
-		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Post -Headers $global:ArexAuthHeader -Body (ConvertTo-Json -InputObject $body -Depth 10 -Compress)  -ContentType 'application/json'
+		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Post -Headers $headers -Body (ConvertTo-Json -InputObject $body -Depth 10 -Compress)  -ContentType 'application/json'
 	} else {
-		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Post -Headers $global:ArexAuthHeader -ContentType 'application/json'
+		Invoke-RestMethod -Uri "https://$global:ArexServer/$api" -Method Post -Headers $headers -ContentType 'application/json'
 	}
 }
 

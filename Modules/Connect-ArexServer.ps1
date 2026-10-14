@@ -3,16 +3,19 @@
    Establishes an authenticated server configuration
 .DESCRIPTION
    Contacts server, uses username and password to retrieve an auth token. Server address and auth token get stored in global variables for consumption by related cmdlets.
+   It returns the login response, which includes the token; pipe it to Out-Null to hide it.
 .PARAMETER Server
-   IP or URL of the target Arexdata Server
+   Host name of the Arexdata API, without https://, e.g. api.eu.arexdata.com
 .PARAMETER User
-   Arexdata Username, in a string
+   Arexdata user email, in a string
 .PARAMETER Password
-   Arexdata Password, in a string
+   Arexdata password, in a string
 .PARAMETER Credential
-   Arexdata Username and Password in either PSCredential or domain\username format
+   Arexdata user email and password as a PSCredential. When a user email is given instead, the password is prompted.
 .EXAMPLE
-   Connect-ArexServer -Server api.dev.arexdata.com -User root -Password 12345
+   Connect-ArexServer -Server api.eu.arexdata.com -User user@domain.com -Password yourpass
+.EXAMPLE
+   Connect-ArexServer -Server api.eu.arexdata.com -Credential (Get-Credential) | Out-Null
 #>
 function Connect-ArexServer {
 	[CmdletBinding(
@@ -39,7 +42,7 @@ function Connect-ArexServer {
         }
         "PSCred" {            
             $body =  @{
-		        username=$Credential.UserName;
+		        email=$Credential.UserName;
 		        password=$Credential.GetNetworkCredential().Password;
 	        }
         }   

@@ -43,21 +43,11 @@ function Get-ArexShadowData {
 		TopUsersUsingAppsWithSensitiveData   = "SensitiveScreens/charts/top-users/using-sensitive-data/non-ai/$DateFilter"
 	}
 
-	$filters = @()
-	if ($TagId) {
-		$filters += @{
-			Filter          = "Equals"
-			ExistsFilter    = $false
-			NumberFilter    = "None"
-			DateFilter      = "None"
-			Column          = "AgentLabels"
-			Value           = $TagId.ToString()
-			Sort            = "None"
-		}
-	}
+	$filters = @(
+		if ($TagId) { ArexFilter "AgentLabels" $TagId.ToString() }
+	)
 
-	# The API expects the browser convention (UTC - local, in minutes) so date ranges match the dashboard
-	$timeOffset = @{ TimeOffset = [string](-[int][TimeZoneInfo]::Local.GetUtcOffset((Get-Date)).TotalMinutes) }
+	$timeOffset = ArexTimeOffset
 
 	$all = $Panel -contains 'All'
 
@@ -80,10 +70,8 @@ function Get-ArexShadowData {
 		if (!$all -and $Panel -notcontains $chart.Key) { continue }
 
 		$response = ArexPost $chart.Value $filters $timeOffset
-		$obj = if ($response.PSObject.Properties['$values']) { $response.{$values} } else { $response }
-
 		$rank = 0
-		foreach ($item in $obj) {
+		foreach ($item in (ArexValues $response)) {
 			$rank++
 			[pscustomobject]@{ Panel = $chart.Key; Rank = $rank; Name = $item.name; Value = $item.value }
 		}

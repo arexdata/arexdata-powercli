@@ -1,10 +1,14 @@
 <#
 .Synopsis
-   Gets Alerts from Arexdata
+   Gets the file events that triggered an alert from Arexdata
 .DESCRIPTION
-   This cmdlet returns the alerts from the connected Arexdata Server. Use "Connect-ArexServer" to connect.
+   This cmdlet returns the first 100 file events (date, server, user, operation and file) behind one triggered file event alert of the connected Arexdata Server. Use "Connect-ArexServer" to connect.
+.PARAMETER RecordId
+   Id of the triggered alert record, as returned in the id column of Get-ArexAlerts.
 .EXAMPLE
-   Get-ArexAlertDetail -RecordId xxxx-xxx-xxxx
+   Get-ArexAlertDetail -RecordId bb4aef1e-3418-4142-afcc-b777d0af5be4
+.EXAMPLE
+   Get-ArexAlertDetail -RecordId bb4aef1e-3418-4142-afcc-b777d0af5be4 | Select-Object -Property user, operationName
 #>
 function Get-ArexAlertDetail {
 	[CmdletBinding()]

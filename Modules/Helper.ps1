@@ -29,6 +29,52 @@ function ArexPost {
 	}
 }
 
+function ArexValues {
+	param ($obj)
+	# The API serializes arrays as { "$id": ..., "$values": [...] }
+	if ($null -ne $obj -and $obj.PSObject.Properties['$values']) { $obj.{$values} } else { $obj }
+}
+
+function ArexTimeOffset {
+	# Browser convention (UTC - local, in minutes), as the web UI sends it, so date ranges match the dashboards
+	@{ TimeOffset = [string](-[int][TimeZoneInfo]::Local.GetUtcOffset((Get-Date)).TotalMinutes) }
+}
+
+function ArexFilter {
+	param (
+		[string] $column,
+		[string] $value,
+		[string] $dateFilter = "None",
+		[string] $sort = "None",
+		[string] $filter = "Equals"
+	)
+	@{
+		Filter          = $filter
+		ExistsFilter    = $false
+		NumberFilter    = "None"
+		DateFilter      = $dateFilter
+		Column          = $column
+		Value           = $value
+		Sort            = $sort
+	}
+}
+
+function ArexPostList {
+	# $api must contain {skip} and {take}, e.g. "AgentTask/{skip}/{take}". $first = 0 returns every page.
+	param ([string] $api, $body, [int] $first = 0, [int] $pageSize = 500)
+
+	$limit = if ($first -gt 0) { $first } else { [int]::MaxValue }
+	$returned = 0
+
+	do {
+		$take = [Math]::Min($pageSize, $limit - $returned)
+		$response = ArexPost $api.Replace('{skip}', $returned).Replace('{take}', $take) $body (ArexTimeOffset)
+		$items = @(ArexValues $response.listData)
+		$items
+		$returned += $items.Count
+	} while ($items.Count -eq $take -and $returned -lt $limit -and ($null -eq $response.total -or $returned -lt $response.total))
+}
+
 function ArexPut {
 	param ([string] $api, $body)
 	$ProgressPreference = 'SilentlyContinue'
